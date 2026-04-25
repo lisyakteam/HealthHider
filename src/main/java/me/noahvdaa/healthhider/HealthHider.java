@@ -3,11 +3,9 @@ package me.noahvdaa.healthhider;
 import io.papermc.paper.network.ChannelInitializeListenerHolder;
 import net.kyori.adventure.key.Key;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import org.bstats.bukkit.Metrics;
-import org.bstats.charts.SimplePie;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,10 +26,6 @@ public final class HealthHider extends JavaPlugin {
 
         ChannelInitializeListenerHolder.addListener(LISTENER_KEY, (channel) -> channel.pipeline().addAfter("packet_handler", "healthhider", new HHHandler(this)));
         this.getServer().getPluginManager().registerEvents(new HHListener(), this);
-
-        Metrics metrics = new Metrics(this, BSTATS_ID);
-        metrics.addCustomChart(new SimplePie("bypass-permission", () -> this.configuration.enableBypassPermission() ? "Yes" : "No"));
-        metrics.addCustomChart(new SimplePie("list-mode", () -> this.configuration.whitelistMode() ? "Whitelist" : "Blacklist"));
     }
 
     @Override
@@ -50,7 +44,7 @@ public final class HealthHider extends JavaPlugin {
 
         Set<EntityType<?>> entities = new HashSet<>();
         for (String entityName : config.getStringList("entities")) {
-            ResourceLocation key = ResourceLocation.tryParse(entityName);
+            Identifier key = Identifier.tryParse(entityName);
             if (key == null) {
                 this.getLogger().warning("Invalid resource key '" + entityName + "'");
                 continue;

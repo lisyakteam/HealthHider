@@ -17,9 +17,7 @@ java {
 }
 
 dependencies {
-    implementation("org.bstats:bstats-bukkit:3.0.0")
-
-    paperweight.paperDevBundle("1.21.6-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
 }
 
 paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
